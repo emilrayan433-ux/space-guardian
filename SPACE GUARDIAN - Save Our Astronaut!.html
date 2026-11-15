@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)file:///C:/Users/farzi/OneDrive/Documents/space_guardian.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPACE GUARDIAN - Save Our Astronaut!</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;font-family:Arial,sans-serif;color:white;
+ background:linear-gradient(135deg,#080e32,#182b60,#35165c);
+ min-height:100vh;
+}
+header{text-align:center;padding:25px 12px}
+header h1{font-size:clamp(30px,6vw,48px);color:#62f4ff;margin:5px}
+header p{color:#d7e6ff}
+nav{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:10px}
+button{
+ cursor:pointer;border:0;border-radius:12px;padding:12px 17px;
+ background:#20c9d8;color:#07152c;font-weight:bold;margin:4px;
+}
+button:hover{transform:scale(1.04);background:#80f5ff}
+button:focus-visible{outline:3px solid white}
+main{max-width:1050px;margin:auto;padding:15px}
+.card{
+ background:#142750;border:1px solid #4568a4;border-radius:20px;
+ padding:20px;margin:15px 0;box-shadow:0 8px 25px #0005;
+}
+.hero{text-align:center;background:linear-gradient(120deg,#213c78,#5b3189)}
+.astronaut{font-size:85px;animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-12px)}}
+h2{color:#70f5ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px}
+.metric{text-align:center;background:#0d1c3c;border-radius:16px;padding:18px}
+.metric .emoji{font-size:35px}
+.value{font-size:32px;font-weight:bold;margin:10px}
+.status{display:inline-block;padding:7px 12px;border-radius:20px;font-weight:bold}
+.normal{background:#145b42;color:#8cffc6}
+.warning{background:#76521b;color:#ffe18b}
+.danger{background:#762b40;color:#ffb1c1}
+.message{padding:14px;background:#0c1c3c;border-radius:12px;margin-top:15px;line-height:1.6}
+.hidden{display:none}
+.choice{
+ display:block;width:100%;text-align:left;background:#263e72;
+ color:white;margin:9px 0;padding:15px;
+}
+.choice:hover{background:#365a9b}
+.score{font-size:28px;color:#ffe17b;font-weight:bold}
+footer{text-align:center;padding:25px;color:#b7c9ed;font-size:13px}
+.small{font-size:13px;color:#bdcbea;line-height:1.6}
+</style>
+</head>
+<body>
+
+<header>
+ <h1>🚀 SPACE GUARDIAN 🌎</h1>
+ <p>✨ Save Our Astronaut – A Space Health Adventure! ✨</p>
+</header>
+
+<nav>
+ <button onclick="show('home')">🏠 Home</button>
+ <button onclick="show('health')">❤️ Health Check</button>
+ <button onclick="show('mission')">🚀 Mission Game</button>
+ <button onclick="show('quiz')">🧠 Space Quiz</button>
+ <button onclick="show('about')">🌟 About</button>
+</nav>
+
+<main>
+
+<section id="home" class="">
+ <div class="card hero">
+  <div class="astronaut">👩‍🚀</div>
+  <h2>WELCOME, SPACE GUARDIAN!</h2>
+  <p>An astronaut is exploring space. Your mission is to keep the astronaut healthy and safe!</p>
+  <button onclick="show('health')">START YOUR MISSION 🚀</button>
+ </div>
+
+ <div class="card">
+  <h2>🌌 Your Mission Objectives</h2>
+  <div class="grid">
+   <div class="metric">❤️<h3>Heart Rate</h3><p>Monitor the heartbeat.</p></div>
+   <div class="metric">🌡️<h3>Temperature</h3><p>Check body temperature.</p></div>
+   <div class="metric">🫁<h3>Oxygen Level</h3><p>Monitor oxygen saturation.</p></div>
+  </div>
+ </div>
+ <div class="card hero">
+  <h2>⭐ Become a Space Hero!</h2>
+  <p>Check health, solve challenges and earn mission points.</p>
+  <div class="score">🏆 Your Score: <span id="points">8</span></div>
+ </div>
+</section>
+
+<section id="health" class="hidden">
+ <div class="card">
+  <h2>❤️ ASTRONAUT HEALTH STATION</h2>
+  <p>Click the button to generate a simulated astronaut health report.</p>
+  <button onclick="checkHealth()">🔍 CHECK ASTRONAUT HEALTH</button>
+  <button onclick="resetHealth()">🔄 RESET</button>
+
+  <div class="grid">
+   <div class="metric">
+    <div class="emoji">❤️</div>
+    <h3>Heart Rate</h3>
+    <div class="value" id="heart">59 bpm</div>
+    <span id="hs" class="status warning">CHECK</span>
+    <p class="small">Beats per minute (bpm)</p>
+   </div>
+   <div class="metric">
+    <div class="emoji">🌡️</div>
+    <h3>Body Temperature</h3>
+    <div class="value" id="temp">35.9 °C</div>
+    <span id="ts" class="status warning">CHECK</span>
+    <p class="small">Degrees Celsius (°C)</p>
+   </div>
+   <div class="metric">
+    <div class="emoji">🫁</div>
+    <h3>Oxygen Saturation</h3>
+    <div class="value" id="oxygen">90%</div>
+    <span id="os" class="status warning">CHECK</span>
+    <p class="small">Percentage (%)</p>
+   </div>
+  </div>
+  <div id="report" class="message">⚠️ Some readings need closer checking. Recheck with approved equipment and follow mission procedures.</div>
+ </div>
+
+ <div class="card">
+  <h2>📋 Previous Health Checks</h2>
+  <div id="history" class="small">Check 1: ❤️ 59 bpm | 🌡️ 35.9 °C | 🫁 90% | WARNING</div>
+ </div>
+</section>
+
+<section id="mission" class="hidden">
+ <div class="card">
+  <h2>🚀 SAVE THE ASTRONAUT!</h2>
+  <div class="astronaut">🧑‍🚀</div>
+  <p id="scenario">Mission 1: 🫁 The oxygen reading is lower than expected. What should you do?</p>
+  <div id="choices"><button class="choice" onclick="chooseMission(0)">Ignore the reading.</button><button class="choice" onclick="chooseMission(1)">Recheck using approved equipment and alert the medical team.</button><button class="choice" onclick="chooseMission(2)">Hide the warning.</button></div>
+  <div id="feedback" class="message hidden"></div>
+  <button id="next" class="hidden" onclick="nextMission()">NEXT MISSION ➡️</button>
+  <p class="score">⭐ Mission Score: <span id="gameScore">0</span></p>
+ </div>
+</section>
+
+<section id="quiz" class="hidden">
+ <div class="card">
+  <h2>🧠 SPACE KNOWLEDGE CHALLENGE</h2>
+  <p id="question">3. What does oxygen saturation describe?</p>
+  <div id="answers"><button class="choice" onclick="answerQuiz(0)">Blood oxygen level</button><button class="choice" onclick="answerQuiz(1)">Spacecraft speed</button><button class="choice" onclick="answerQuiz(2)">Astronaut height</button></div>
+  <div id="quizFeedback" class="message hidden">🌟 Correct! Great space knowledge!</div>
+  <button id="quizNext" class="hidden" onclick="nextQuestion()">NEXT QUESTION ➡️</button>
+  <p class="score">🏆 Quiz Score: <span id="quizScore">2</span></p>
+ </div>
+</section>
+
+<section id="about" class="hidden">
+ <div class="card">
+  <h2>🌍 ABOUT SPACE GUARDIAN</h2>
+  <p>Space Guardian is an educational project designed to demonstrate how astronauts' health can be monitored during space missions.</p>
+  <h2>🎯 Our Objectives</h2>
+  <ul>
+   <li>Understand astronaut health monitoring.</li>
+   <li>Learn about heart rate, body temperature and oxygen saturation.</li>
+   <li>Recognize unusual health readings.</li>
+   <li>Understand the importance of health alerts.</li>
+   <li>Learn how software can support astronaut safety.</li>
+  </ul>
+  <h2>👩‍🚀 Our Three Student Roles</h2>
+  <p><b>Student 1 – Space Scientist:</b> Research and explain astronaut health.</p>
+  <p><b>Student 2 – Software Developer:</b> Demonstrate the monitoring dashboard.</p>
+  <p><b>Student 3 – Mission Safety Officer:</b> Demonstrate alerts and the mission game.</p>
+  <h2>⚙️ How Does It Work?</h2>
+  <p>The website generates simulated health readings and uses simple rules to identify readings that may need attention. It also provides educational scenarios and quizzes.</p>
+  <div class="message">
+   <b>Important:</b> This is a student educational simulation. It does not use real astronaut data, physical sensors or NASA medical systems. It cannot diagnose health conditions. Real medical decisions must be made by qualified professionals.
+  </div>
+ </div>
+</section>
+
+</main>
+
+<footer>
+ SPACE GUARDIAN 🚀 | Student Educational Project<br>
+ Exploring Space • Learning Science • Protecting Astronauts
+</footer>
+
+<script>
+let points=0;
+function addPoints(n){
+ points+=n;
+ document.getElementById('points').textContent=points;
+}
+
+function show(id){
+ document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden');
+ if(id==='mission' && !gameStarted) renderMission();
+ if(id==='quiz' && !quizStarted) renderQuiz();
+}
+
+let history=[];
+function checkHealth(){
+ const h=Math.floor(55+Math.random()*76);
+ const t=Number((35.5+Math.random()*3.2).toFixed(1));
+ const o=Math.floor(88+Math.random()*13);
+
+ document.getElementById('heart').textContent=h+' bpm';
+ document.getElementById('temp').textContent=t+' °C';
+ document.getElementById('oxygen').textContent=o+'%';
+
+ function classify(key,v){
+  if(key==='oxygen') return v>=95?'normal':v>=90?'warning':'danger';
+  if(key==='heart') return v>=60&&v<=100?'normal':v>=45&&v<=120?'warning':'danger';
+  return v>=36.1&&v<=37.5?'normal':v>=35.5&&v<=38?'warning':'danger';
+ }
+
+ const results=[
+  classify('heart',h),
+  classify('temp',t),
+  classify('oxygen',o)
+ ];
+ const names=['hs','ts','os'];
+ names.forEach((id,i)=>{
+  const el=document.getElementById(id);
+  el.className='status '+results[i];
+  el.textContent=results[i]==='normal'?'NORMAL':results[i]==='warning'?'CHECK':'WARNING';
+ });
+
+ const overall=results.includes('danger')?'danger':results.includes('warning')?'warning':'normal';
+ const messages={
+  normal:'🌟 All sample readings are within the demonstration ranges. Continue routine monitoring.',
+  warning:'⚠️ Some readings need closer checking. Recheck with approved equipment and follow mission procedures.',
+  danger:'🚨 A simulated warning has appeared. Follow emergency procedures and contact the qualified medical team.'
+ };
+ document.getElementById('report').textContent=messages[overall];
+
+ history.unshift('Check '+(history.length+1)+': ❤️ '+h+' bpm | 🌡️ '+t+' °C | 🫁 '+o+'% | '+overall.toUpperCase());
+ document.getElementById('history').innerHTML=history.slice(0,8).join('<br>');
+ addPoints(2);
+}
+
+function resetHealth(){
+ ['heart','temp','oxygen'].forEach(id=>document.getElementById(id).textContent='--');
+ ['hs','ts','os'].forEach(id=>{
+  document.getElementById(id).className='status warning';
+  document.getElementById(id).textContent='Not checked';
+ });
+ document.getElementById('report').textContent='Waiting for your health check!';
+}
+
+const missions=[
+ {
+ q:'🫁 The oxygen reading is lower than expected. What should you do?',
+ a:['Ignore the reading.','Recheck using approved equipment and alert the medical team.','Hide the warning.'],
+ c:1,
+ f:'Correct! Unusual oxygen readings need checking and the medical team must be informed according to mission procedures.'
+ },
+ {
+ q:'❤️ The astronaut has a sudden change in heart rate. What is the safest choice?',
+ a:['Report it and follow mission procedures.','Delete the reading.','Ignore the monitor.'],
+ c:0,
+ f:'Correct! Unusual changes should be checked and reported.'
+ },
+ {
+ q:'🌡️ Why is body temperature monitored?',
+ a:['To choose a planet.','To help identify changes in the astronaut’s condition.','To measure rocket speed.'],
+ c:1,
+ f:'Correct! Body temperature is one useful health indicator.'
+ },
+ {
+ q:'🚨 A health warning appears. What should the software do?',
+ a:['Hide the warning.','Automatically diagnose an illness.','Explain the warning and advise following mission procedures.'],
+ c:2,
+ f:'Correct! Software can identify unusual readings, but medical professionals make real health decisions.'
+ }
+];
+let mi=0,gameScore=0,gameStarted=false;
+function renderMission(){
+ gameStarted=true;
+ document.getElementById('scenario').textContent='Mission '+(mi+1)+': '+missions[mi].q;
+ document.getElementById('choices').innerHTML=missions[mi].a.map((a,i)=>
+ `<button class="choice" onclick="chooseMission(${i})">${a}</button>`).join('');
+ document.getElementById('feedback').classList.add('hidden');
+ document.getElementById('next').classList.add('hidden');
+}
+function chooseMission(i){
+ const m=missions[mi];
+ document.querySelectorAll('#choices button').forEach(b=>b.disabled=true);
+ const ok=i===m.c;
+ if(ok){gameScore++;addPoints(5)}
+ document.getElementById('gameScore').textContent=gameScore;
+ const f=document.getElementById('feedback');
+ f.textContent=(ok?'🌟 Excellent decision! ':'💡 Good try! ')+m.f;
+ f.classList.remove('hidden');
+ document.getElementById('next').classList.remove('hidden');
+}
+function nextMission(){
+ mi++;
+ if(mi>=missions.length){
+  document.getElementById('scenario').textContent='🏆 MISSION COMPLETED! You helped protect the astronaut!';
+  document.getElementById('choices').innerHTML='<button onclick="restartMission()">PLAY AGAIN 🔄</button>';
+  document.getElementById('feedback').classList.add('hidden');
+  document.getElementById('next').classList.add('hidden');
+ }else renderMission();
+}
+function restartMission(){mi=0;gameScore=0;gameStarted=false;document.getElementById('gameScore').textContent=0;renderMission()}
+
+const questions=[
+ {q:'1. Which measurement tells us how fast the heart beats?',a:['Heart rate','Temperature','Height'],c:0},
+ {q:'2. Which unit is used for body temperature?',a:['Kilometres','Degrees Celsius','Litres'],c:1},
+ {q:'3. What does oxygen saturation describe?',a:['Blood oxygen level','Spacecraft speed','Astronaut height'],c:0},
+ {q:'4. Can this educational website diagnose an astronaut?',a:['Yes','No, it is a simulation','Only sometimes'],c:1},
+ {q:'5. Who makes real medical decisions?',a:['A computer game','A qualified medical team','A random number'],c:1}
+];
+let qi=0,quizScore=0,quizStarted=false;
+function renderQuiz(){
+ quizStarted=true;
+ document.getElementById('question').textContent=questions[qi].q;
+ document.getElementById('answers').innerHTML=questions[qi].a.map((a,i)=>
+ `<button class="choice" onclick="answerQuiz(${i})">${a}</button>`).join('');
+ document.getElementById('quizFeedback').classList.add('hidden');
+ document.getElementById('quizNext').classList.add('hidden');
+}
+function answerQuiz(i){
+ document.querySelectorAll('#answers button').forEach(b=>b.disabled=true);
+ const ok=i===questions[qi].c;
+ if(ok){quizScore++;addPoints(3)}
+ document.getElementById('quizScore').textContent=quizScore;
+ const f=document.getElementById('quizFeedback');
+ f.textContent=ok?'🌟 Correct! Great space knowledge!':'💡 Good try! Remember what you learned about astronaut health.';
+ f.classList.remove('hidden');
+ document.getElementById('quizNext').classList.remove('hidden');
+}
+function nextQuestion(){
+ qi++;
+ if(qi>=questions.length){
+  document.getElementById('question').textContent='🎉 QUIZ COMPLETED! Your score: '+quizScore+' / '+questions.length;
+  document.getElementById('answers').innerHTML='<button onclick="restartQuiz()">TRY AGAIN 🔄</button>';
+  document.getElementById('quizFeedback').classList.add('hidden');
+  document.getElementById('quizNext').classList.add('hidden');
+ }else renderQuiz();
+}
+function restartQuiz(){qi=0;quizScore=0;quizStarted=false;document.getElementById('quizScore').textContent=0;renderQuiz()}
+</script>
+
+
+</body></html>
